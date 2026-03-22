@@ -1,0 +1,24 @@
+export type ProjectData = {
+  id: string | number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  link?: string;
+};
+
+export const MOCK_DATA: ProjectData[] = [
+  {
+    id: 1,
+    title: "첫 번째 프로젝트",
+    description: "여기에 설명을 입력하세요.",
+    imageUrl: "/placeholder.jpg",
+    link: "https://github.com",
+  },
+  {
+    id: 2,
+    title: "두 번째 프로젝트",
+    description: "여기에 설명을 입력하세요.",
+    imageUrl: "/placeholder.jpg",
+    link: "https://github.com",
+  },
+];

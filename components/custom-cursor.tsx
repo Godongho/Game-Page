@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion, useMotionValue, useSpring } from "framer-motion"
+import { CURSOR_CONFIG } from "@/data"
 
 export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false)
@@ -10,9 +11,8 @@ export function CustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
 
-  const springConfig = { damping: 25, stiffness: 400 }
-  const cursorXSpring = useSpring(cursorX, springConfig)
-  const cursorYSpring = useSpring(cursorY, springConfig)
+  const cursorXSpring = useSpring(cursorX, CURSOR_CONFIG.spring)
+  const cursorYSpring = useSpring(cursorY, CURSOR_CONFIG.spring)
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {

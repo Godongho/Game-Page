@@ -22,3 +22,8 @@ export const MOCK_DATA: ProjectData[] = [
     link: "https://github.com",
   },
 ];
+
+export const CURSOR_CONFIG = {
+  // mass 값을 작게 주면 마우스가 훨씬 가볍고 부드럽게(끊김 없이) 즉각 반응합니다.
+  spring: { damping: 25, stiffness: 600, mass: 0.1 },
+};

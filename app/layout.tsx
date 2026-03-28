@@ -1,10 +1,28 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Permanent_Marker, Archivo_Black, Chakra_Petch } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
+
+const fontMarker = Permanent_Marker({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-marker',
+})
+
+const fontBlack = Archivo_Black({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-black',
+})
+
+const fontTech = Chakra_Petch({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-tech',
+})
 
 export const metadata: Metadata = {
   title: 'Studio 801 | Game Art Outsourcing Company',
@@ -36,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" translate="no" suppressHydrationWarning>
-      <body className="font-sans antialiased" suppressHydrationWarning>
+      <body className={`font-sans antialiased ${fontMarker.variable} ${fontBlack.variable} ${fontTech.variable}`} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>

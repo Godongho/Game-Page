@@ -26,7 +26,7 @@ export function Header() {
             className="group relative"
             data-cursor-hover
           >
-            <span className="text-lg font-medium tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
+            <span suppressHydrationWarning className="text-lg font-medium tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
               Studio 801
             </span>
           </Link>
@@ -49,7 +49,7 @@ export function Header() {
                   className="group relative text-sm font-light tracking-wide text-muted-foreground transition-colors duration-300 hover:text-foreground"
                   data-cursor-hover
                 >
-                  {item.label}
+                  <span suppressHydrationWarning>{item.label}</span>
                   <span className="absolute -bottom-1 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full" />
                 </Link>
               </motion.li>

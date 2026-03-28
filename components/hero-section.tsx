@@ -2,7 +2,6 @@
 
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import Image from "next/image"
 import Link from "next/link"
 import { HERO_DATA } from "@/data"
 
@@ -14,7 +13,6 @@ export function HeroSection() {
   })
 
   // Paralax effects
-  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
@@ -52,25 +50,7 @@ export function HeroSection() {
         </span>
       </motion.div>
 
-      {/* 3. Central 3D Hero Image - Positioned right of center if requested, but mostly central in the layout */}
-      <motion.div
-        className="absolute inset-y-0 right-0 left-auto z-10 flex cursor-pointer items-center justify-end p-8 pt-24 w-full md:w-3/4"
-        style={{ y: imageY }}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-      >
-        <div className="relative h-[80vh] w-[90%] md:w-[800px] max-w-full" data-cursor-hover>
-          <Image
-            src={HERO_DATA.imageUrl}
-            alt="Hero AI Samurai Art"
-            fill
-            className="object-contain object-right"
-            priority
-            sizes="(max-width: 768px) 100vw, 800px"
-          />
-        </div>
-      </motion.div>
+
 
       {/* 4. Top Right Description Text */}
       <motion.div

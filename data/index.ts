@@ -36,5 +36,6 @@ export const HERO_DATA = {
   contactBtnText: "CONTACT US",
   badgeText1: "GET IN TOUCH",
   badgeText2: "STUDIO 801",
-  imageUrl: "/samurai-ai.jpg"
+  imageUrl: "/hero-image.png",
+  hoverImageUrl: "/samurai-ai.jpg"
 };

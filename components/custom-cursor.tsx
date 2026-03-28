@@ -93,8 +93,8 @@ export function CustomCursor() {
         <motion.div
           className="rounded-full bg-white"
           animate={{
-            width: isHovering ? 6 : 4,
-            height: isHovering ? 6 : 4,
+            width: isHovering ? 12 : 8,
+            height: isHovering ? 12 : 8,
           }}
           transition={{
             type: 'spring',

@@ -1,125 +1,145 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useEffect, useState } from "react"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
+import { HERO_DATA } from "@/data"
 
 export function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  })
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+  // Paralax effects
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"])
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
   return (
     <section
+      ref={containerRef}
       id="home"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-8"
+      className="relative flex min-h-screen w-full flex-col bg-[#0d0d0d] overflow-hidden"
     >
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute -left-1/4 -top-1/4 h-[800px] w-[800px] rounded-full bg-primary/5 blur-[120px]"
-          animate={{
-            x: mousePosition.x * 2,
-            y: mousePosition.y * 2,
-          }}
-          transition={{ type: "spring", damping: 50, stiffness: 100 }}
-        />
-        <motion.div
-          className="absolute -bottom-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-primary/3 blur-[100px]"
-          animate={{
-            x: -mousePosition.x * 1.5,
-            y: -mousePosition.y * 1.5,
-          }}
-          transition={{ type: "spring", damping: 50, stiffness: 100 }}
-        />
-      </div>
+      {/* 1. Massive Background Text (Level Design) */}
+      <motion.div 
+        className="absolute inset-x-0 bottom-[10%] z-0 flex w-full justify-between px-4 sm:px-12 md:px-24 pointer-events-none"
+        style={{ y: textY, opacity }}
+      >
+        <span suppressHydrationWarning className="font-black text-[clamp(3.5rem,13vw,16rem)] leading-none text-white/80 tracking-tighter select-none">
+          {HERO_DATA.bgTextLeft}
+        </span>
+        <span suppressHydrationWarning className="font-black text-[clamp(4.5rem,15vw,18rem)] leading-none text-white/80 tracking-tighter select-none">
+          {HERO_DATA.bgTextRight}
+        </span>
+      </motion.div>
 
-      {/* Grid overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(240,240,240,0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(240,240,240,0.1) 1px, transparent 1px)`,
-          backgroundSize: '100px 100px',
-        }}
-      />
-
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+      {/* 2. Cyberpunk Tech Number Overlay ("801") */}
+      <motion.div
+        className="absolute left-[5%] top-[45%] z-20 pointer-events-none"
+        style={{ y: textY, opacity }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      >
+        <span suppressHydrationWarning
+          className="font-tech text-[clamp(6rem,12vw,16rem)] font-bold italic leading-none tracking-widest text-transparent select-none custom-text-stroke"
         >
-          <h1 className="mb-8 text-balance font-light leading-[0.95] tracking-tight" suppressHydrationWarning>
-            <motion.span
-              suppressHydrationWarning
-              className="block text-[clamp(2.5rem,8vw,7rem)] text-foreground"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              GAME ART
-            </motion.span>
-            <motion.span
-              suppressHydrationWarning
-              className="block text-[clamp(2.5rem,8vw,7rem)] text-foreground"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            >
-              OUTSOURCING COMPANY
-            </motion.span>
-            <motion.span
-              suppressHydrationWarning
-              className="mt-4 block text-[clamp(1.5rem,4vw,3rem)] text-muted-foreground"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <span suppressHydrationWarning className="text-primary">|</span> GAME DEV STUDIO 801
-            </motion.span>
-          </h1>
-        </motion.div>
+          {HERO_DATA.outlineText}
+        </span>
+      </motion.div>
 
-        <motion.p
-          suppressHydrationWarning
-          className="mx-auto max-w-xl text-lg font-light text-muted-foreground"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        >
-          Bringing your creative vision to life.
-        </motion.p>
+      {/* 3. Central 3D Hero Image - Positioned right of center if requested, but mostly central in the layout */}
+      <motion.div
+        className="absolute inset-y-0 right-0 left-auto z-10 flex cursor-pointer items-center justify-end p-8 pt-24 w-full md:w-3/4"
+        style={{ y: imageY }}
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      >
+        <div className="relative h-[80vh] w-[90%] md:w-[800px] max-w-full" data-cursor-hover>
+          <Image
+            src={HERO_DATA.imageUrl}
+            alt="Hero AI Samurai Art"
+            fill
+            className="object-contain object-right"
+            priority
+            sizes="(max-width: 768px) 100vw, 800px"
+          />
+        </div>
+      </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+      {/* 4. Top Right Description Text */}
+      <motion.div
+        className="absolute right-[5%] top-[25%] z-30 max-w-[320px] text-right"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.8 }}
+      >
+        <p suppressHydrationWarning className="text-sm font-light leading-relaxed text-white/70">
+          {HERO_DATA.description}
+        </p>
+      </motion.div>
+
+      {/* 5. Right Side Accent (Vertical text or icon) */}
+      <motion.div
+        className="absolute right-[8%] top-[50%] z-30 hidden md:block"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1 }}
+      >
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-2 w-2 rounded-full border border-white/50 bg-transparent" />
+          <div className="h-16 w-px bg-white/20" />
+        </div>
+      </motion.div>
+
+      {/* 6. Contact Us Button / Component area */}
+      <motion.div
+        className="absolute right-[5%] bottom-[25%] z-30 flex items-center gap-6"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 0.9 }}
+      >
+        <Link 
+          href="#contact"
+          data-cursor-hover
+          className="group flex items-center rounded-full border border-white/20 bg-black/40 px-6 py-3 backdrop-blur-md transition-all hover:bg-white/10"
         >
-          <motion.div
-            className="flex h-14 w-8 items-start justify-center rounded-full border border-white/20 p-2"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-          >
-            <motion.div
-              className="h-2 w-1 rounded-full bg-primary"
-              animate={{ y: [0, 12, 0], opacity: [1, 0.5, 1] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            />
-          </motion.div>
-        </motion.div>
-      </div>
+          <span suppressHydrationWarning className="text-sm font-medium tracking-wider text-white">
+            {HERO_DATA.contactBtnText}
+          </span>
+          <span className="ml-4 text-white/50 transition-transform group-hover:translate-x-1">→</span>
+        </Link>
+      </motion.div>
+
+      {/* 7. Bottom Right Circular Badge */}
+      <motion.div
+        className="absolute right-[3%] bottom-[5%] z-30 h-32 w-32"
+        initial={{ opacity: 0, rotate: -45 }}
+        animate={{ opacity: 1, rotate: 0 }}
+        transition={{ duration: 1.2, delay: 1.1 }}
+      >
+        <div className="relative flex h-full w-full items-center justify-center rounded-full border border-[#F05A28]/20 bg-[#0d0d0d]/50 backdrop-blur-sm" data-cursor-hover>
+           {/* Center Text */}
+           <div suppressHydrationWarning className="text-center text-xs font-bold leading-tight text-[#F05A28]">
+             {HERO_DATA.badgeText2.split(' ')[0]}<br/>{HERO_DATA.badgeText2.split(' ')[1]}
+           </div>
+           
+           {/* Rotating circular text pseudo-element effect (simplified) */}
+           <svg className="absolute inset-0 h-full w-full animate-[spin_10s_linear_infinite]" viewBox="0 0 100 100">
+              <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="transparent" />
+              <text fontSize="8.5" fill="#F05A28" fontWeight="bold" letterSpacing="2.5">
+                <textPath href="#circlePath" startOffset="0%">
+                   <tspan suppressHydrationWarning>{HERO_DATA.badgeText1}</tspan> • <tspan suppressHydrationWarning>{HERO_DATA.badgeText1}</tspan> •
+                </textPath>
+              </text>
+           </svg>
+        </div>
+      </motion.div>
     </section>
   )
 }

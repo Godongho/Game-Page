@@ -59,8 +59,9 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h1 className="mb-8 text-balance font-light leading-[0.95] tracking-tight">
+          <h1 className="mb-8 text-balance font-light leading-[0.95] tracking-tight" suppressHydrationWarning>
             <motion.span
+              suppressHydrationWarning
               className="block text-[clamp(2.5rem,8vw,7rem)] text-foreground"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -69,6 +70,7 @@ export function HeroSection() {
               GAME ART
             </motion.span>
             <motion.span
+              suppressHydrationWarning
               className="block text-[clamp(2.5rem,8vw,7rem)] text-foreground"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -77,17 +79,19 @@ export function HeroSection() {
               OUTSOURCING COMPANY
             </motion.span>
             <motion.span
+              suppressHydrationWarning
               className="mt-4 block text-[clamp(1.5rem,4vw,3rem)] text-muted-foreground"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="text-primary">|</span> GAME DEV STUDIO 801
+              <span suppressHydrationWarning className="text-primary">|</span> GAME DEV STUDIO 801
             </motion.span>
           </h1>
         </motion.div>
 
         <motion.p
+          suppressHydrationWarning
           className="mx-auto max-w-xl text-lg font-light text-muted-foreground"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -11,9 +11,6 @@ export function CustomCursor() {
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
 
-  const cursorXSpring = useSpring(cursorX, CURSOR_CONFIG.spring)
-  const cursorYSpring = useSpring(cursorY, CURSOR_CONFIG.spring)
-
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX)
@@ -58,8 +55,8 @@ export function CustomCursor() {
       <motion.div
         className="pointer-events-none fixed top-0 left-0 z-[9999] mix-blend-difference"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          x: cursorX,
+          y: cursorY,
           translateX: '-50%',
           translateY: '-50%',
         }}
@@ -89,8 +86,8 @@ export function CustomCursor() {
       <motion.div
         className="pointer-events-none fixed top-0 left-0 z-[10000]"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
+          x: cursorX,
+          y: cursorY,
           translateX: '-50%',
           translateY: '-50%',
         }}

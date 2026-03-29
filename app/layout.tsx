@@ -3,8 +3,8 @@ import { Geist, Geist_Mono, Permanent_Marker, Archivo_Black, Chakra_Petch } from
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const fontMarker = Permanent_Marker({
   weight: '400',
@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" translate="no" suppressHydrationWarning>
-      <body className={`font-sans antialiased ${fontMarker.variable} ${fontBlack.variable} ${fontTech.variable}`} suppressHydrationWarning>
+      <body className={`font-sans antialiased ${_geistMono.variable} ${fontMarker.variable} ${fontBlack.variable} ${fontTech.variable}`} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>

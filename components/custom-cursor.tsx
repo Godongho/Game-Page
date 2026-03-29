@@ -1,15 +1,20 @@
-"use client"
-
 import { useEffect, useState } from "react"
-import { motion, useMotionValue, useSpring } from "framer-motion"
-import { CURSOR_CONFIG } from "@/data"
+import { motion, useMotionValue, AnimatePresence, useVelocity, useTransform, useSpring } from "framer-motion"
+import { Hand } from "lucide-react"
 
 export function CustomCursor() {
   const [isHovering, setIsHovering] = useState(false)
+  const [isDragMode, setIsDragMode] = useState(false)
+  const [isClicked, setIsClicked] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
 
   const cursorX = useMotionValue(-100)
   const cursorY = useMotionValue(-100)
+
+  // Velocity-based tilt logic
+  const velocityX = useVelocity(cursorX)
+  const tiltRaw = useTransform(velocityX, [-2000, 2000], [-25, 25])
+  const tilt = useSpring(tiltRaw, { damping: 20, stiffness: 200 })
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
@@ -20,19 +25,37 @@ export function CustomCursor() {
 
     const handleMouseEnter = () => setIsVisible(true)
     const handleMouseLeave = () => setIsVisible(false)
+    const handleMouseDown = () => setIsClicked(true)
+    const handleMouseUp = () => setIsClicked(false)
 
     const addHoverListeners = () => {
-      const interactiveElements = document.querySelectorAll(
+      // General Hover (Links, Buttons)
+      const hoverElements = document.querySelectorAll(
         'a, button, [data-cursor-hover], input, textarea, select'
       )
       
-      interactiveElements.forEach((el) => {
+      hoverElements.forEach((el) => {
         el.addEventListener('mouseenter', () => setIsHovering(true))
         el.addEventListener('mouseleave', () => setIsHovering(false))
+      })
+
+      // Drag Area (Portfolio, etc)
+      const dragElements = document.querySelectorAll('[data-cursor-drag]')
+      dragElements.forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          setIsDragMode(true)
+          setIsHovering(true)
+        })
+        el.addEventListener('mouseleave', () => {
+          setIsDragMode(false)
+          setIsHovering(false)
+        })
       })
     }
 
     window.addEventListener('mousemove', moveCursor)
+    window.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mouseup', handleMouseUp)
     document.addEventListener('mouseenter', handleMouseEnter)
     document.addEventListener('mouseleave', handleMouseLeave)
     
@@ -43,6 +66,8 @@ export function CustomCursor() {
 
     return () => {
       window.removeEventListener('mousemove', moveCursor)
+      window.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mouseup', handleMouseUp)
       document.removeEventListener('mouseenter', handleMouseEnter)
       document.removeEventListener('mouseleave', handleMouseLeave)
       observer.disconnect()
@@ -62,10 +87,10 @@ export function CustomCursor() {
         }}
       >
         <motion.div
-          className="rounded-full border-[1.5px] border-white"
+          className="relative flex items-center justify-center rounded-full border-[1.5px] border-white"
           animate={{
-            width: isHovering ? 80 : 40,
-            height: isHovering ? 80 : 40,
+            width: isHovering ? 100 : 40,
+            height: isHovering ? 100 : 40,
             backgroundColor: isHovering ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
             borderColor: isHovering ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)'
           }}
@@ -77,7 +102,37 @@ export function CustomCursor() {
           style={{
             opacity: isVisible ? 1 : 0,
           }}
-        />
+        >
+          {/* Hand Icon on Drag Areas */}
+          <AnimatePresence>
+            {isDragMode && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
+                animate={{ opacity: 1, scale: 1, rotate: tilt.get() }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                style={{ rotate: tilt }}
+                className="text-white fill-white transition-transform duration-200"
+              >
+                {isClicked ? (
+                  /* Custom Closed Fist (Grabbing) SVG */
+                  <svg 
+                    width="32" height="32" viewBox="0 0 24 24" 
+                    fill="none" stroke="currentColor" strokeWidth="2" 
+                    strokeLinecap="round" strokeLinejoin="round"
+                    className="animate-in fade-in zoom-in duration-150"
+                  >
+                    <path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0" />
+                    <path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2" />
+                    <path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8" />
+                    <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" />
+                  </svg>
+                ) : (
+                  <Hand size={32} strokeWidth={1.5} />
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </motion.div>
       
       {/* Center dot */}
@@ -93,8 +148,8 @@ export function CustomCursor() {
         <motion.div
           className="rounded-full bg-white"
           animate={{
-            width: isHovering ? 12 : 8,
-            height: isHovering ? 12 : 8,
+            width: isDragMode ? 0 : (isHovering ? 12 : 8),
+            height: isDragMode ? 0 : (isHovering ? 12 : 8),
           }}
           transition={{
             type: 'spring',

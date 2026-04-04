@@ -16,6 +16,7 @@ import { PORTFOLIO_PROJECTS } from "@/data/portfolio-data"
 
 export function PortfolioSlider() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
     <section className="relative min-h-[90vh] w-full overflow-hidden bg-[#0d0d0d] py-24 flex flex-col items-center justify-center">
@@ -52,9 +53,9 @@ export function PortfolioSlider() {
           slidesPerView={"auto"}
           loop={true}
           coverflowEffect={{
-            rotate: 25,
-            stretch: 0,
-            depth: 200,
+            rotate: 35,
+            stretch: -20,
+            depth: 100,
             modifier: 1,
             slideShadows: true,
           }}
@@ -74,9 +75,11 @@ export function PortfolioSlider() {
               {({ isActive }) => (
                 <div
                   data-cursor-drag="true"
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
                   className={`group relative aspect-[16/9] w-full overflow-hidden rounded-2xl border transition-all duration-700 ${isActive
-                      ? "border-white/40 shadow-[0_0_50px_rgba(255,255,255,0.15)] ring-1 ring-white/20"
-                      : "border-white/5 opacity-40 grayscale brightness-50"
+                    ? "border-white/40 shadow-[0_0_50px_rgba(255,255,255,0.15)] ring-1 ring-white/20"
+                    : "border-white/5 brightness-75"
                     }`}
                 >
                   {/* Main Project Image */}
@@ -88,43 +91,56 @@ export function PortfolioSlider() {
                     priority={index === 0}
                   />
 
-                  {/* Glassmorphism Text Overlay (Visible on Active only) */}
+                  {/* Text Overlay (Visible on Active & Hover only) */}
                   <AnimatePresence>
-                    {isActive && (
+                    {isActive && hoveredIndex === index && (
                       <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 20 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="absolute inset-x-0 bottom-0 z-10 p-8 pt-16 bg-gradient-to-t from-black/80 via-black/40 to-transparent backdrop-blur-[2px]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 z-10 p-6 sm:p-10 bg-black/60 backdrop-blur-[2px] flex flex-col justify-between"
                       >
-                        <div className="relative flex flex-col gap-4">
-                          {/* Logo Area */}
-                          <div className="flex flex-col">
-                            <h4 className="font-mono text-[10px] font-bold tracking-[0.3em] text-[#ff5500] mb-2 uppercase">
-                              {project.category}
-                            </h4>
-                            <h2 className="font-mono text-3xl font-black text-white/90 tracking-tighter sm:text-4xl md:text-5xl">
-                              {project.title}
-                            </h2>
-                          </div>
+                        {/* Top Text */}
+                        <motion.div
+                          initial={{ opacity: 0, y: -20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1, duration: 0.4 }}
+                          className="w-full text-center mt-2"
+                        >
+                          <h4 className="font-sans text-[12px] sm:text-[14px] font-bold tracking-[0.05em] text-white">
+                            SERVICES PROVIDED: <span className="uppercase">{project.category}</span>
+                          </h4>
+                        </motion.div>
 
-                          {/* 3-Column Breakdown Area */}
-                          <div className="mt-2 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-12">
-                            {project.quote.split('|').map((part, idx) => (
-                              <div key={idx} className="relative flex flex-col pt-4 border-t border-white/10 md:pt-0 md:border-t-0 md:pl-4 md:border-l first:border-0 first:pl-0">
-                                <motion.div
-                                  initial={{ opacity: 0, y: 10 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                  transition={{ delay: 0.3 + idx * 0.1 }}
-                                >
-                                  <p className="text-[11px] sm:text-[13px] leading-relaxed text-white/70 italic">
-                                    {part.trim()}
-                                  </p>
-                                </motion.div>
-                              </div>
-                            ))}
-                          </div>
+                        {/* Bottom Area */}
+                        <div className="w-full flex flex-col md:flex-row justify-between items-end gap-6 mb-2">
+                          {/* Quote (Bottom Left) */}
+                          <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2, duration: 0.4 }}
+                            className="w-full md:w-[65%]"
+                          >
+                            <p className="text-[13px] sm:text-[15px] md:text-[17px] leading-relaxed text-white italic font-bold drop-shadow-lg">
+                              {project.quote}
+                            </p>
+                          </motion.div>
+
+                          {/* Author (Bottom Right) */}
+                          <motion.div
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.3, duration: 0.4 }}
+                            className="w-full md:w-auto text-left md:text-right flex flex-col items-start md:items-end justify-end shrink-0"
+                          >
+                            <p className="text-[13px] sm:text-[15px] md:text-[17px] font-bold text-[#ff3300] drop-shadow-lg whitespace-pre-wrap">
+                              {project.author}
+                            </p>
+                            <p className="text-[13px] sm:text-[15px] md:text-[17px] font-bold text-[#ff3300] drop-shadow-lg whitespace-pre-wrap">
+                              {project.company}
+                            </p>
+                          </motion.div>
                         </div>
                       </motion.div>
                     )}

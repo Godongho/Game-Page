@@ -40,7 +40,7 @@ export function PortfolioSlider() {
           className="font-mono text-3xl font-black tracking-tighter text-white md:text-5xl"
         >
           <span className="text-white">OUR </span>
-          <span className="text-[#ff5500]">PORTFOLIO</span>
+          <span className="text-[#ff5500]">PROJECT</span>
         </motion.h3>
       </div>
 

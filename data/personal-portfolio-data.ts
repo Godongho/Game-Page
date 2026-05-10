@@ -2,25 +2,30 @@ export type PortfolioCategory = {
   id: string;
   title: string;
   tags: string[];
+  /** 호버 시 슬라이드되어 나타나는 배경 이미지 */
+  hoverImage?: string;
 };
 
 export const PERSONAL_PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   {
-    id: "3d-environment",
-    title: "3D ENVIRONMENT",
+    id: "3D LEVEL DESIGN",
+    title: "3D LEVEL DESIGN",
     tags: [
-      "REALISTIC 3D ENVIRONMENT",
-      "STYLIZED 3D ENVIRONMENT"
-    ]
+      "LEVEL DESIGN BLOCKOUT",
+      "STEAMPUNK Adventure",
+      "Third-Person Shooter"
+    ],
+    hoverImage: "/portfolio_golden_city.jpg"
   },
   {
-    id: "hard-surface",
-    title: "HARD SURFACE",
+    id: "3D-ART",
+    title: "3D-ART",
     tags: [
-      "REALISTIC 3D VEHICLES",
-      "REALISTIC 3D WEAPONS",
-      "REALISTIC 3D HARD SURFACE"
-    ]
+      "REALISTIC 3D Cinematic",
+      "",
+      ""
+    ],
+    hoverImage: "/portfolio_3d_art.png"
   },
   {
     id: "3d-characters",
@@ -28,6 +33,7 @@ export const PERSONAL_PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
     tags: [
       "REALISTIC 3D CHARACTERS",
       "STYLIZED 3D CHARACTERS"
-    ]
+    ],
+    hoverImage: "/portfolio_district_map.jpg"
   }
 ];

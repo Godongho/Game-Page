@@ -5,18 +5,20 @@ import Link from "next/link"
 
 import Image from "next/image"
 import { HERO_DATA } from "@/data"
-
-const navItems = [
-  { label: "Studio", href: "#studio" },
-  { label: "Work", href: "#work" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
-]
+import { LanguageSwitcher } from "./language-switcher"
+import { useLanguage } from "./language-provider"
+import { TRANSLATIONS, t } from "@/data/translations"
 
 import { useState, useEffect } from "react"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const { lang } = useLanguage()
+
+  const navItems = [
+    { label: t(TRANSLATIONS.nav.studio, lang), href: "#studio" },
+    { label: t(TRANSLATIONS.nav.contact, lang), href: "#contact" },
+  ]
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +35,7 @@ export function Header() {
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 flex justify-center py-6 px-4"
     >
-      <div className="relative flex w-full max-w-[94%] items-center justify-between rounded-full border border-white/20 bg-white/[0.03] px-12 py-4 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]">
+      <div className="relative flex w-full max-w-[94%] items-center justify-between rounded-full border border-white/20 bg-black/60 px-12 py-4 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.8)]">
         {/* Subtle Glass internal glow */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/[0.05] to-transparent pointer-events-none" />
         
@@ -90,6 +92,9 @@ export function Header() {
               </motion.li>
             ))}
           </ul>
+
+          {/* Language Switcher */}
+          <LanguageSwitcher />
         </nav>
 
         {/* Sheikah Centered Detail (Subtle) */}

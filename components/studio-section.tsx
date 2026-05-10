@@ -2,16 +2,14 @@
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
+import { useLanguage } from "./language-provider"
+import { TRANSLATIONS, t } from "@/data/translations"
 
-const stats = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "15+", label: "Years Experience" },
-  { value: "100%", label: "Client Satisfaction" },
-  { value: "30+", label: "Team Members" },
-]
+
 
 export function StudioSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const { lang } = useLanguage()
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -38,10 +36,10 @@ export function StudioSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="mb-4 block text-sm uppercase tracking-widest text-primary">
-            About Us
+            {t(TRANSLATIONS.studio.label, lang)}
           </span>
           <h2 className="max-w-3xl text-balance text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl">
-            We create digital art that pushes boundaries
+            {t(TRANSLATIONS.studio.heading, lang)}
           </h2>
         </motion.div>
 
@@ -55,14 +53,10 @@ export function StudioSection() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <p className="mb-6 text-lg font-light leading-relaxed text-muted-foreground">
-              Studio 801 is a premier game art outsourcing studio dedicated to crafting 
-              exceptional visual experiences. We partner with game developers worldwide 
-              to bring their creative visions to life.
+              {t(TRANSLATIONS.studio.desc1, lang)}
             </p>
             <p className="text-lg font-light leading-relaxed text-muted-foreground">
-              Our team of talented artists and technical experts combines artistic 
-              excellence with cutting-edge technology to deliver assets that exceed 
-              expectations and elevate gaming experiences.
+              {t(TRANSLATIONS.studio.desc2, lang)}
             </p>
           </motion.div>
 
@@ -74,9 +68,9 @@ export function StudioSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {stats.map((stat, index) => (
+            {TRANSLATIONS.studio.stats.map((stat, index) => (
               <motion.div
-                key={stat.label}
+                key={stat.value}
                 className="group"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -93,7 +87,7 @@ export function StudioSection() {
                     {stat.value}
                   </div>
                   <div className="text-sm font-light uppercase tracking-widest text-muted-foreground">
-                    {stat.label}
+                    {t(stat.label, lang)}
                   </div>
                 </div>
               </motion.div>

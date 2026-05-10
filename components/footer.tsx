@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useLanguage } from "./language-provider"
+import { TRANSLATIONS, t } from "@/data/translations"
 
 export function Footer() {
+  const { lang } = useLanguage()
   return (
     <footer className="border-t border-white/5 py-12 px-8">
       <div className="mx-auto max-w-7xl">
@@ -33,7 +36,7 @@ export function Footer() {
             className="text-center"
           >
             <p className="text-sm font-light text-muted-foreground">
-              &copy; {new Date().getFullYear()} Studio 801. All rights reserved.
+              &copy; {new Date().getFullYear()} Studio PADO. {t(TRANSLATIONS.footer.copyright, lang)}
             </p>
           </motion.div>
 
@@ -49,7 +52,7 @@ export function Footer() {
               className="group flex items-center gap-2 text-sm font-light text-muted-foreground transition-colors duration-300 hover:text-foreground"
               data-cursor-hover
             >
-              <span>Back to top</span>
+              <span>{t(TRANSLATIONS.footer.backToTop, lang)}</span>
               <motion.svg
                 className="h-4 w-4 rotate-[-90deg] transition-transform duration-300 group-hover:-translate-y-1"
                 fill="none"

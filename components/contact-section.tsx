@@ -1,8 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { useLanguage } from "./language-provider"
+import { TRANSLATIONS, t } from "@/data/translations"
 
 export function ContactSection() {
+  const { lang } = useLanguage()
   return (
     <section id="contact" className="relative py-32 px-8">
       {/* Background accent */}
@@ -20,14 +23,13 @@ export function ContactSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="mb-4 block text-sm uppercase tracking-widest text-primary">
-              Get In Touch
+              {t(TRANSLATIONS.contact.label, lang)}
             </span>
             <h2 className="mb-8 text-balance text-4xl font-light tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              {"Let's create something amazing together"}
+              {t(TRANSLATIONS.contact.heading, lang)}
             </h2>
             <p className="mb-10 max-w-md text-lg font-light text-muted-foreground">
-              Ready to elevate your game with stunning visuals? We would love to hear about 
-              your project and explore how we can help bring your vision to life.
+              {t(TRANSLATIONS.contact.desc, lang)}
             </p>
             
             <motion.a
@@ -38,7 +40,7 @@ export function ContactSection() {
               data-cursor-hover
             >
               <span className="text-sm font-medium uppercase tracking-widest">
-                Start a Project
+                {t(TRANSLATIONS.contact.startProject, lang)}
               </span>
               <svg
                 className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
@@ -66,7 +68,7 @@ export function ContactSection() {
           >
             <div className="group" data-cursor-hover>
               <span className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground">
-                Email
+                {t(TRANSLATIONS.contact.email, lang)}
               </span>
               <a 
                 href="mailto:hello@studio801.com"
@@ -78,16 +80,16 @@ export function ContactSection() {
 
             <div className="group" data-cursor-hover>
               <span className="mb-2 block text-xs uppercase tracking-widest text-muted-foreground">
-                Location
+                {t(TRANSLATIONS.contact.location, lang)}
               </span>
               <span className="text-2xl font-light text-foreground md:text-3xl">
-                Los Angeles, CA
+                {t(TRANSLATIONS.contact.locationValue, lang)}
               </span>
             </div>
 
             <div>
               <span className="mb-4 block text-xs uppercase tracking-widest text-muted-foreground">
-                Follow Us
+                {t(TRANSLATIONS.contact.followUs, lang)}
               </span>
               <div className="flex gap-6">
                 {["Twitter", "LinkedIn", "Instagram", "Artstation"].map((social) => (

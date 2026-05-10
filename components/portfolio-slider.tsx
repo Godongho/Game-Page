@@ -13,10 +13,14 @@ import "swiper/css/effect-coverflow"
 import "swiper/css/navigation"
 
 import { PORTFOLIO_PROJECTS } from "@/data/portfolio-data"
+import { PROJECT_SECTION_FONTS } from "@/data/font-config"
+import { useLanguage } from "./language-provider"
+import { TRANSLATIONS, t } from "@/data/translations"
 
 export function PortfolioSlider() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const { lang } = useLanguage()
 
   return (
     <section className="relative min-h-[90vh] w-full overflow-hidden bg-[#0d0d0d] py-24 flex flex-col items-center justify-center">
@@ -29,18 +33,20 @@ export function PortfolioSlider() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-mono text-[10px] font-bold tracking-[0.4em] text-white/40 mb-2"
+          className="font-mono font-bold tracking-[0.4em] text-white/40 mb-2"
+          style={{ fontSize: PROJECT_SECTION_FONTS.subTitle }}
         >
-          OUR SELECTION
+          {t(TRANSLATIONS.projectSection.subTitle, lang)}
         </motion.h2>
         <motion.h3
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="font-mono text-3xl font-black tracking-tighter text-white md:text-5xl"
+          className="font-mono font-black tracking-tighter text-white"
+          style={{ fontSize: PROJECT_SECTION_FONTS.mainTitle }}
         >
-          <span className="text-white">OUR </span>
-          <span className="text-[#ff5500]">PROJECT</span>
+          <span className="text-white">{t(TRANSLATIONS.projectSection.mainTitleLeft, lang)} </span>
+          <span className="text-[#ff5500]">{t(TRANSLATIONS.projectSection.mainTitleRight, lang)}</span>
         </motion.h3>
       </div>
 
@@ -108,8 +114,12 @@ export function PortfolioSlider() {
                           transition={{ delay: 0.1, duration: 0.4 }}
                           className="w-full text-center mt-2"
                         >
-                          <h4 className="font-sans text-[12px] sm:text-[14px] font-bold tracking-[0.05em] text-white">
-                            SERVICES PROVIDED: <span className="uppercase">{project.category}</span>
+                          <h4 className="font-sans font-bold tracking-[0.05em] text-white" style={{ fontSize: PROJECT_SECTION_FONTS.cardServiceLabel }}>
+                            {t(TRANSLATIONS.projectSection.servicesProvided, lang)} <span className="uppercase">
+                              {TRANSLATIONS.projectCards[index]
+                                ? t(TRANSLATIONS.projectCards[index].category, lang)
+                                : project.category}
+                            </span>
                           </h4>
                         </motion.div>
 
@@ -122,8 +132,10 @@ export function PortfolioSlider() {
                             transition={{ delay: 0.2, duration: 0.4 }}
                             className="w-full md:w-[65%]"
                           >
-                            <p className="text-[13px] sm:text-[15px] md:text-[17px] leading-relaxed text-white italic font-bold drop-shadow-lg">
-                              {project.quote}
+                            <p className="leading-relaxed text-white italic font-bold drop-shadow-lg" style={{ fontSize: PROJECT_SECTION_FONTS.cardQuote }}>
+                              {TRANSLATIONS.projectCards[index]
+                                ? t(TRANSLATIONS.projectCards[index].quote, lang)
+                                : project.quote}
                             </p>
                           </motion.div>
 
@@ -134,10 +146,10 @@ export function PortfolioSlider() {
                             transition={{ delay: 0.3, duration: 0.4 }}
                             className="w-full md:w-auto text-left md:text-right flex flex-col items-start md:items-end justify-end shrink-0"
                           >
-                            <p className="text-[13px] sm:text-[15px] md:text-[17px] font-bold text-[#ff3300] drop-shadow-lg whitespace-pre-wrap">
+                            <p className="font-bold text-[#ff3300] drop-shadow-lg whitespace-pre-wrap" style={{ fontSize: PROJECT_SECTION_FONTS.cardAuthor }}>
                               {project.author}
                             </p>
-                            <p className="text-[13px] sm:text-[15px] md:text-[17px] font-bold text-[#ff3300] drop-shadow-lg whitespace-pre-wrap">
+                            <p className="font-bold text-[#ff3300] drop-shadow-lg whitespace-pre-wrap" style={{ fontSize: PROJECT_SECTION_FONTS.cardAuthor }}>
                               {project.company}
                             </p>
                           </motion.div>

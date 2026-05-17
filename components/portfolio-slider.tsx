@@ -23,7 +23,7 @@ export function PortfolioSlider() {
   const { lang } = useLanguage()
 
   return (
-    <section className="relative min-h-[90vh] w-full overflow-hidden bg-[#0d0d0d] py-24 flex flex-col items-center justify-center">
+    <section id="our-project" className="relative min-h-[90vh] w-full overflow-hidden bg-[#0d0d0d] py-24 flex flex-col items-center justify-center">
       {/* Background radial Glow (Subtle) */}
       <div className="absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-[100%] bg-blue-500/5 blur-[120px] pointer-events-none" />
 
@@ -76,7 +76,7 @@ export function PortfolioSlider() {
           {PORTFOLIO_PROJECTS.map((project, index) => (
             <SwiperSlide
               key={project.id}
-              className="!w-[320px] sm:!w-[500px] md:!w-[750px]"
+              className="!w-[280px] sm:!w-[500px] md:!w-[750px]"
             >
               {({ isActive }) => (
                 <div
@@ -97,15 +97,17 @@ export function PortfolioSlider() {
                     priority={index === 0}
                   />
 
-                  {/* Text Overlay (Visible on Active & Hover only) */}
+                  {/* Text Overlay (Visible on Active) */}
                   <AnimatePresence>
-                    {isActive && hoveredIndex === index && (
+                    {isActive && (
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute inset-0 z-10 p-6 sm:p-10 bg-black/60 backdrop-blur-[2px] flex flex-col justify-between"
+                        className={`absolute inset-0 z-10 p-6 sm:p-10 bg-black/60 backdrop-blur-[2px] flex flex-col justify-between transition-opacity duration-300 ${
+                          hoveredIndex === index ? "opacity-100" : "md:opacity-0 opacity-100"
+                        }`}
                       >
                         {/* Top Text */}
                         <motion.div

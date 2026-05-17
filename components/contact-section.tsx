@@ -33,7 +33,7 @@ export function ContactSection() {
             </p>
             
             <motion.a
-              href="mailto:hello@studio801.com"
+              href="mailto:akcls111@naver.com"
               className="group inline-flex items-center gap-4 rounded-full border border-primary bg-primary/10 px-8 py-4 text-foreground transition-all duration-300 hover:bg-primary hover:text-white"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -71,10 +71,10 @@ export function ContactSection() {
                 {t(TRANSLATIONS.contact.email, lang)}
               </span>
               <a 
-                href="mailto:hello@studio801.com"
+                href="mailto:akcls111@naver.com"
                 className="text-2xl font-light text-foreground transition-colors duration-300 group-hover:text-primary md:text-3xl"
               >
-                hello@studio801.com
+                akcls111@naver.com
               </a>
             </div>
 

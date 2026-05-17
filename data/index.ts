@@ -36,13 +36,21 @@ export const HERO_DATA = {
   outlineColor: "#ff0000",
   glowColor: "transparent",
   bgTextFlickerDuration: 5,
-  bgTextSize: "clamp(4rem, 16vw, 18rem)",
+  bgTextSize: "clamp(2.5rem, 15vw, 18rem)",
   bgTextWeight: "600",
   bgTextPos: { bottom: "50px", left: "-20%", right: "0%", gap: "0vw" },
-  contactBtnPos: { bottom: "40%", right: "10%" },
+  contactBtnPos: { bottom: "50%", right: "10%" },
   contactBtnText: "CONTACT US",
   badgeText1: "GET IN TOUCH",
   badgeText2: "STUDIO PADO",
   headerLogoSize: "50px",
-  headerLogoSizeTop: "70px"
+  headerLogoSizeTop: "70px",
+
+  // ============================================
+  // 레이아웃 간격 조절 (PADO와 STUDIO 사이 간격)
+  // ============================================
+  /** PADO 텍스트 상단 여백 (기본값: '15vh') */
+  paddingTop: "40vh",
+  /** PADO와 STUDIO 사이의 수직 간격 (기본값: '10vh', 창을 반으로 줄였을 때 간격을 좁히고 싶다면 '5vh'나 '50px' 등으로 조절하세요) */
+  verticalGap: "5vh",
 };

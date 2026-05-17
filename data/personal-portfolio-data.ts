@@ -8,7 +8,7 @@ export type PortfolioCategory = {
 
 export const PERSONAL_PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   {
-    id: "3D LEVEL DESIGN",
+    id: "3d-level-design",
     title: "3D LEVEL DESIGN",
     tags: [
       "LEVEL DESIGN BLOCKOUT",
@@ -18,7 +18,7 @@ export const PERSONAL_PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
     hoverImage: "/portfolio_golden_city.jpg"
   },
   {
-    id: "3D-ART",
+    id: "3d-art",
     title: "3D-ART",
     tags: [
       "REALISTIC 3D Cinematic",

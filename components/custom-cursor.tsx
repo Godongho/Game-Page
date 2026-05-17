@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useState } from "react"
 import { motion, useMotionValue, AnimatePresence, useVelocity, useTransform, useSpring } from "framer-motion"
 import { Hand } from "lucide-react"

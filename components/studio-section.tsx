@@ -21,7 +21,7 @@ export function StudioSection() {
     <section 
       id="studio" 
       ref={sectionRef}
-      className="relative py-32 px-8"
+      className="relative py-16 md:py-32 px-4 md:px-8"
     >
       <motion.div 
         className="mx-auto max-w-7xl"
